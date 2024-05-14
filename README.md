@@ -6,23 +6,20 @@ regular expressions.
 
 ## Requirements and Usage
 
-The library requires php 5.3 or newer. To add it to your projects, simply add
-`derrabus/ereg-shim` to your composer dependencies.
+The library requires php 5.3 or newer. It can be automatically included as follows:
 
 ```
-composer require derrabus/ereg-shim
+git clone https://github.com/Hierosoft/php-ereg-shim
+cd php-ereg-shim && echo "auto_prepend_file=`pwd`/php-ereg-shim-procedural.php" | sudo tee /etc/php.d/95-php-ereg-shim-procedural.ini
 ```
 
-This should auto-register the shim for you. However, it remains inactive as
-long as the ereg extension is active. It should be safe to include it in
-projects that should be tested on php 5 and php 7/8 simultaneously.
+Installing this way means the program requires PHP 8.0 or higher, otherwise the function would already exist.
+- In earlier versions, the function already exist so you don't need php-ereg-shim at all
+  (to make it compatible with both, php-ereg-shim would have to be entirely wrapped in `if (!function_exists("ereg")) {}` anyway, becoming a do-nothing include in that case).
 
-You can also force the usage of the shim implementation on php 5 by directly
-calling the corresponding methods on the `Rabus\EregShim\Ereg` class.
-
-Global function call        | Forced shimmed function call
---------------------------- | -------------------------------------------------
-`ereg('[0-9][^0-9]', '2a')` | `\Rabus\EregShim\Ereg::ereg('[0-9][^0-9]', '2a')`
+Global function call
+---------------------------
+`ereg('[0-9][^0-9]', '2a')`
 
 ## Purpose and limitations
 
